@@ -7,6 +7,13 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 import './app.css';
 
 function App() {
+    //Делаем вид что получаем данные с сервера :)   (Пока работаем без API)
+    const data = [
+        {name: "Денис К.", salary: 800, increase: false},
+        {name: "Владимир С.", salary: 1350, increase: true},
+        {name: "Юлия А.", salary: 1720, increase: false},
+    ];
+
     return (
         <div className="app">
             <AppInfo />
@@ -16,7 +23,7 @@ function App() {
                 <AppFilter />
             </div>
 
-            <EmployeesList />
+            <EmployeesList data={data}/>
             <EmployeesAddForm />
         </div>
     );
