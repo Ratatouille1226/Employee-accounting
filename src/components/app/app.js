@@ -9,9 +9,9 @@ import './app.css';
 function App() {
     //Делаем вид что получаем данные с сервера :)   (Пока работаем без API)
     const data = [
-        {name: "Денис К.", salary: 800, increase: false},
-        {name: "Владимир С.", salary: 1350, increase: true},
-        {name: "Юлия А.", salary: 1720, increase: false},
+        {name: "Денис К.", salary: 800, increase: false, id: 1},
+        {name: "Владимир С.", salary: 1350, increase: true, id: 2},
+        {name: "Юлия А.", salary: 1720, increase: false, id: 3},
     ];
 
     return (
