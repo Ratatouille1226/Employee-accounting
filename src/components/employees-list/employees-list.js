@@ -2,12 +2,16 @@ import EmployeesListItem from "../employees-list-item/employees-list-item";
 
 import "./employees-list.css";
 
-const EmployeesList = ({data}) => {
-    //Динамеческое формирование сотрудников, подтягиваем из нашей воображаемой API
+const EmployeesList = ({data, onDelete}) => {
+    //Динамическое формирование сотрудников, подтягиваем из нашей воображаемой API
     const element = data.map(item => {
         const {id, ...itemProps} = item;
         return (
-            <EmployeesListItem key={id} {...itemProps} />
+            <EmployeesListItem 
+            key={id} 
+            {...itemProps}
+            onDelete={() => onDelete(id)} 
+            />
         );
     });
 
