@@ -19,6 +19,9 @@ class EmployeesAddForm extends Component {
     //Записываем значения с формы
     onSubmit = (e) => {
         e.preventDefault();
+        //Проверка на пустые поля
+        if (this.state.name.length < 3 || !this.state.salary) return;
+
         this.props.onAdd(this.state.name, this.state.salary);
         this.setState({
             name: '',

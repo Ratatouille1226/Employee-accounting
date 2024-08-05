@@ -1,27 +1,8 @@
-import { Component } from 'react';
-
 import "./employees-list-item.css";
 
-class EmployeesListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: false,
-            star: false
-        }
-    }
+const EmployeesListItem = (props) => {
 
-    //Метод активации премии
-    onIncrease = () => {
-        this.setState(({increase, star}) => ({
-            increase: !increase,
-            star: !star
-        }));
-    }
-
-    render() {
-        const {name, salary, onDelete} = this.props;
-        const {increase, star} = this.state;
+        const {name, salary, onDelete, onToggleIncrease, increase, star} = props;
 
         let classNames = "list-group-item d-flex justify-content-between";
         //Добавляем класс активности 
@@ -35,12 +16,12 @@ class EmployeesListItem extends Component {
     
         return (
             <li className={classNames}>
-                <span onClick={this.onIncrease} className="list-group-item-label">{name}</span>
+                <span onClick={onToggleIncrease} className="list-group-item-label">{name}</span>
                 <input type="text" className="list-group-item-input" defaultValue={salary + "$"}/>
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button"
                         className="btn-cookie btn-sm "
-                        onClick={this.onIncrease}>
+                        onClick={onToggleIncrease}>
                         <i className="fas fa-cookie"></i>
                     </button>
     
@@ -53,7 +34,6 @@ class EmployeesListItem extends Component {
                 </div>
             </li>
         );
-    }
 };
 
 export default EmployeesListItem;
