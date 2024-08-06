@@ -17,7 +17,9 @@ class App extends Component {
                 {name: "Денис К.", salary: 800, increase: false, star: false, id: 1},
                 {name: "Владимир С.", salary: 1350, increase: true, star: true, id: 2},
                 {name: "Юлия А.", salary: 1720, increase: false, star: false, id: 3},
-            ]
+            ],
+            term: '',
+            filter: 'all'
         }
         this.maxId = 4;
     }
@@ -60,22 +62,57 @@ class App extends Component {
         }))
     }
 
+    //Поиск сотрудников компании
+    searchEmp = (items, term) => {
+        //Возвращаем неизмененный массив если пользователь удалил строку которую он написал
+        if (term.length === 0) {
+            return items;
+        }
+        //Фильтруем массив
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    //Фильтрация сотрудников (повышение и зп больше 1000 долларов)
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case 'star':
+                return items.filter(item => item.star);
+            case 'moreThen1000': 
+                return items.filter(item => item.salary > 1000);
+            default: return items;
+        }
+    }
+
+    //Подъём состояния, записываем данные и компонента search panel в стэйт term
+    onSearchUpdate = (term) => {
+        this.setState({term});
+    }
+
+    onFilterSelect = (filter) => {
+        this.setState({filter});
+    }
+
     render() {
+        const {data, term, filter} = this.state;
         //Получаем данные сколько всего сотрудников в компании и сколько получают премию
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length;
+        //Отфильтрованный массив поиска и фильтрации сотрудников по разделам
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter);
 
         return (
             <div className="app">
                 <AppInfo employees={employees} increased={increased} />
     
                 <div className="search-panel">
-                    <SearchPanel />
-                    <AppFilter />
+                    <SearchPanel onSearchUpdate={this.onSearchUpdate}/>
+                    <AppFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
                 </div>
     
                 <EmployeesList 
-                    data={this.state.data} 
+                    data={visibleData} 
                     onDelete={this.deleteItem}
                     onToggleIncrease={this.onToggleIncrease}
                 />
